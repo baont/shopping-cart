@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
 
 		for (CartBean item : cartItems) {
 
-			double amount = new ProductServiceImpl().getProductPrice(item.getProdId()) * item.getQuantity();
+			double amount = new ProductServiceImpl().getProductPrice(item.getProdId()) * item.getQuantity() * 10;
 
 			OrderBean order = new OrderBean(transactionId, item.getProdId(), item.getQuantity(), amount);
 
