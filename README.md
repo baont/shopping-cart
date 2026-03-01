@@ -42,9 +42,9 @@ Note: The payment page is created only for demo purpose and its not fully integr
 ### ================ Software And Tools Required ================
 - : Git [https://www.youtube.com/watch?v=gv7VPQ4LZ7g]
 - : Java JDK 8+ [https://www.youtube.com/watch?v=O9PWH9SeTTE]
-- : Eclipse EE (Enterprise Edition) [https://www.youtube.com/watch?v=8aDsEV7txXE]
-- : Apache Maven [https://www.youtube.com/watch?v=jd2zx3dLjuw]
-- : Tomcat v8.0+ [https://youtu.be/mLFPodZO8Iw?t=903]
+ - : Eclipse EE (Enterprise Edition) [https://www.youtube.com/watch?v=8aDsEV7txXE]
+ - : Gradle (build tool) — preferred [https://gradle.org/install/]
+ - : Tomcat v8.0+ [https://youtu.be/mLFPodZO8Iw?t=903]
 - : MySQL Server [https://www.youtube.com/watch?v=Ydh5jYA6Frs]
 - : MySQL Workbench [https://www.youtube.com/watch?v=t79oCeTXHwg]
 
@@ -80,7 +80,20 @@ Step 3: Go inside ```Java Resources > src > application.properties``` and update
 - a) Update value for db.username and db.password according to your installed mysql credentials.
 - b) Update value for mailer.email and mailer.password, with the same email and app password that you generated earlier in above section [ NOTE:Actual gmail password will not work]
 
-Step 4: Right Click on Project > Run as > Maven Build > In the goals field enter "clean install" > apply > run
+Step 4: Build with Gradle to produce a WAR
+
+- If you have Gradle installed:
+  - In a terminal at the project root run:
+    - `gradle clean build`
+  - The WAR will be at: `build/libs/shopping-cart-0.0.1-SNAPSHOT.war`
+
+- If you don't have Gradle installed:
+  - Install Gradle (recommended methods):
+    - SDKMAN!: `curl -s "https://get.sdkman.io" | bash && source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk install gradle 7.6.4`
+    - Homebrew: `brew install gradle`
+  - Then generate the Gradle Wrapper (optional but recommended):
+    - `gradle wrapper --gradle-version 7.6.4`
+    - Next builds can use `./gradlew clean build`
 
 Step 5: Right Click On Project > Build Path > Configure Build Path > Libraries > Remove and Update Any Libraries if Red Mark Exists > Finish.
 
@@ -103,10 +116,16 @@ Step 10: Default Username And Password For Admin Is "admin@gmail.com" And "admin
 
 Step 11: The default Username And Password For User Is "guest@gmail.com" And "guest"
 
+### Notes for Gradle build
+- This project now uses Gradle files: see `build.gradle` and `settings.gradle`.
+- Source layout remains legacy-style (Java in `src`, web app in `WebContent`). The Gradle build maps these locations accordingly and packages `WebContent` into the WAR, excluding `WEB-INF/lib/**` because dependencies are resolved via Gradle.
+- Servlet API is marked as `compileOnly` and must be provided by the servlet container (Tomcat).
+- Unit tests use JUnit 4 and Mockito. Run with `gradle test` or `./gradlew test` if wrapper is generated.
+
 ## FAQ
 **Question:1** Unable to Connect to Database?
 
-**Answer:** Please check you have installed the mysql correctly and have updated the correct db details in application.properties file. Also you can try doing maven clean install and force update the project and restart.
+**Answer:** Please check you have installed MySQL correctly and have updated the correct db details in `src/application.properties`. For build issues, run `gradle clean build -i` for more logs. If using Eclipse, ensure the Gradle project is refreshed (via Buildship or re-import as a Gradle project).
 <hr>
 
 Note:- This is a Sample Project for learning purpose, we have not much considered of web security.
@@ -154,5 +173,4 @@ Note:- This is a Sample Project for learning purpose, we have not much considere
 <bold>Thanks a lot,</bold><br/>
                                                                                                         Project Leader<br/>
                                                                                                          <b>Shashi Raj</b>
-
 

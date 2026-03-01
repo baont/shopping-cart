@@ -1,0 +1,13 @@
+arguments=--init-script /Users/lw12696/.serena/language_servers/static/EclipseJDTLS/workspaces/0b4f21c35ad444f19af1397b56f6a670/config_path/org.eclipse.osgi/59/0/.cp/gradle/init/init.gradle --init-script /Users/lw12696/.serena/language_servers/static/EclipseJDTLS/workspaces/0b4f21c35ad444f19af1397b56f6a670/config_path/org.eclipse.osgi/59/0/.cp/gradle/protobuf/init.gradle --init-script /Users/lw12696/.serena/language_servers/static/EclipseJDTLS/workspaces/0b4f21c35ad444f19af1397b56f6a670/config_path/org.eclipse.osgi/59/0/.cp/gradle/android/init.gradle
+auto.sync=false
+build.scans.enabled=false
+connection.gradle.distribution=GRADLE_DISTRIBUTION(LOCAL_INSTALLATION(/Users/lw12696/.serena/language_servers/static/EclipseJDTLS/gradle-8.14.2))
+connection.project.dir=
+eclipse.preferences.version=1
+gradle.user.home=/Users/lw12696/.gradle
+java.home=/Users/lw12696/.serena/language_servers/static/EclipseJDTLS/vscode-java/extension/jre/21.0.7-macosx-aarch64
+jvm.arguments=
+offline.mode=false
+override.workspace.settings=true
+show.console.view=true
+show.executions.view=true

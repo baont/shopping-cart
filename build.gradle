@@ -1,0 +1,97 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group = 'shopping-cart'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    // If you prefer toolchains, uncomment the next line and ensure JDK 8 is available
+    // toolchain { languageVersion = JavaLanguageVersion.of(8) }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            // Legacy source layout: Java under ./src
+            // Exclude tests from main sources
+            srcDirs = ['src']
+            exclude('test/**')
+        }
+        resources {
+            // Mirror Maven's resources section: everything in src except .java
+            srcDirs = ['src']
+            exclude '**/*.java'
+        }
+    }
+    test {
+        java {
+            // Tests already live here
+            srcDirs = ['src/test/java']
+        }
+        resources {
+            // No dedicated test resources directory in this project
+            srcDirs = []
+        }
+    }
+}
+
+
+dependencies {
+    implementation 'mysql:mysql-connector-java:8.0.33'
+
+    // Do not package the Servlet API into the WAR (provided by the container)
+    compileOnly 'javax.servlet:javax.servlet-api:3.1.0'
+
+    implementation 'jakarta.mail:jakarta.mail-api:2.1.1'
+    implementation 'com.sun.mail:jakarta.mail:2.0.1'
+
+    implementation 'javax.xml.ws:jaxws-api:2.3.1'
+
+    implementation 'commons-codec:commons-codec:1.15'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:5.2.0'
+    testImplementation 'org.mockito:mockito-inline:5.2.0'
+}
+
+tasks.named('test') {
+    // Using JUnit 4; Gradle will detect it automatically
+    testLogging {
+        events 'failed', 'skipped'
+        exceptionFormat 'short'
+    }
+}
+
+tasks.named('war') {
+    // Package existing WebContent directory as the webapp root
+    from('WebContent') {
+        // Exclude container/Gradle-managed libs to avoid duplicates
+        exclude('WEB-INF/lib/**')
+    }
+    // Reproducible archives
+    reproducibleFileOrder = true
+    preserveFileTimestamps = false
+}
+
+// Configure the Wrapper task to avoid network validation issues when generating scripts
+wrapper {
+    gradleVersion = '9.2.1'
+    distributionType = Wrapper.DistributionType.BIN
+    distributionUrl = 'https://services.gradle.org/distributions/gradle-9.2.1-all.zip'
+    networkTimeout = 10000
+    validateDistributionUrl = false
+}
