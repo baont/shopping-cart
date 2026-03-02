@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'war'
+    id 'jacoco'
 }
 
 group = 'shopping-cart'
@@ -73,6 +74,19 @@ tasks.named('test') {
     testLogging {
         events 'failed', 'skipped'
         exceptionFormat 'short'
+    }
+}
+
+jacoco {
+    toolVersion = '0.8.12'
+}
+
+tasks.named('jacocoTestReport') {
+    dependsOn tasks.test
+    reports {
+        xml.required = true
+        html.required = true
+        csv.required = false
     }
 }
 
